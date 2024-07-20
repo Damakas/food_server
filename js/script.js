@@ -335,6 +335,18 @@ window.addEventListener('DOMContentLoaded', function () {
   let slidesIndex = 1;
   let offset = 0;
 
+  function checkSlidesLength(slide, index) {
+    if (slide.length < 10) {
+      index.textContent = `0${slidesIndex}`;
+    } else {
+      index.textContent = slidesIndex;
+    }
+  }
+  function dotsActive(dotx) {
+    dotx.forEach(dot => dot.style.opacity = '.5');
+    dotx[slidesIndex - 1].style.opacity = 1;
+  }
+
   if (slides.length < 10) {
     total.textContent = `0${slides.length}`;
     current.textContent = `0${slidesIndex}`;
@@ -414,14 +426,10 @@ window.addEventListener('DOMContentLoaded', function () {
       slidesIndex++;
     }
 
-    if (slides.length < 10) {
-      current.textContent = `0${slidesIndex}`;
-    } else {
-      current.textContent = slidesIndex;
-    }
+    checkSlidesLength(slides, current);
 
-    dots.forEach(dot => dot.style.opacity = '.5');
-    dots[slidesIndex - 1].style.opacity = 1;
+    dotsActive(dots)
+
   });
 
   prev.addEventListener('click', () => {
@@ -439,14 +447,11 @@ window.addEventListener('DOMContentLoaded', function () {
       slidesIndex--;
     }
 
-    if (slides.length < 10) {
-      current.textContent = `0${slidesIndex}`;
-    } else {
-      current.textContent = slidesIndex;
-    }
+    checkSlidesLength(slides, current);
 
-    dots.forEach(dot => dot.style.opacity = '.5');
-    dots[slidesIndex - 1].style.opacity = 1;
+
+    dotsActive(dots)
+
   });
 
   dots.forEach(dot => {
@@ -458,14 +463,9 @@ window.addEventListener('DOMContentLoaded', function () {
 
       slidesField.style.transform = `translateX(-${offset}px)`;
 
-      if (slides.length < 10) {
-        current.textContent = `0${slidesIndex}`;
-      } else {
-        current.textContent = slidesIndex;
-      }
+      checkSlidesLength(slides, current);
 
-      dots.forEach(dot => dot.style.opacity = '.5');
-      dots[slidesIndex - 1].style.opacity = 1;
+      dotsActive(dots)
     });
   });
 

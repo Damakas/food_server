@@ -41,9 +41,10 @@ window.addEventListener('DOMContentLoaded', function () {
     }
   });
 
+
   // Timer
 
-  const deadline = '2022-06-11';
+  const deadline = '2024-07-22';
 
   function getTimeRemaining(endtime) {
     const t = Date.parse(endtime) - Date.parse(new Date()),
@@ -315,6 +316,60 @@ window.addEventListener('DOMContentLoaded', function () {
       closeModal();
     }, 4000)
   }
+
+  // Slider
+
+  let slidesIndex = 1;
+
+  const slides = document.querySelectorAll('.offer__slide'),
+    prev = document.querySelector('.offer__slider-prev'),
+    next = document.querySelector('.offer__slider-next'),
+    total = document.querySelector('#total'),
+    current = document.querySelector('#current');
+
+  showSlides(slidesIndex)
+
+  if (slides.length < 10) {
+    total.textContent = `0${slides.length}`
+  } else {
+    total.textContent = slides.length
+  }
+
+  function showSlides(n) {
+    if (n > slides.length) {
+      slidesIndex = 1
+    }
+    if (n < 1) {
+      slidesIndex = slides.length
+    }
+
+    slides.forEach(item => {
+      item.classList.add('hide')
+      item.classList.remove('show')
+    })
+
+    slides[slidesIndex - 1].classList.add('show')
+    slides[slidesIndex - 1].classList.remove('hide')
+
+    if (slides.length < 10) {
+      current.textContent = `0${slidesIndex}`
+    } else {
+      current.textContent = slidesIndex
+    }
+  }
+
+  function plusIndex(n) {
+    showSlides(slidesIndex += n)
+  }
+
+  prev.addEventListener('click', () => {
+    plusIndex(-1)
+  });
+
+  next.addEventListener('click', () => {
+    plusIndex(1)
+  })
+
 
 
   // fetch('https://jsonplaceholder.typicode.com/posts', {

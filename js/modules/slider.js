@@ -1,12 +1,12 @@
-function slider() {
-    const slides = document.querySelectorAll('.offer__slide'),
-        slider = document.querySelector('.offer__slider'),
-        prev = document.querySelector('.offer__slider-prev'),
-        next = document.querySelector('.offer__slider-next'),
-        total = document.querySelector('#total'),
-        current = document.querySelector('#current'),
-        slidesWrapper = document.querySelector('.offer__slider-wrapper'),
-        slidesField = document.querySelector('.offer__slider-inner'),
+function slider({ container, slide, nextArrow, prevArrow, totalCounter, currentCounter, wrapper, field }) {
+    const slides = document.querySelectorAll(slide),
+        slider = document.querySelector(container),
+        prev = document.querySelector(prevArrow),
+        next = document.querySelector(nextArrow),
+        total = document.querySelector(totalCounter),
+        current = document.querySelector(currentCounter),
+        slidesWrapper = document.querySelector(wrapper),
+        slidesField = document.querySelector(field),
         width = window.getComputedStyle(slidesWrapper).width;
 
     let slidesIndex = 1;
@@ -120,16 +120,20 @@ function slider() {
 
         slidesField.style.transform = `translateX(-${offset}px)`;
 
-        if (slidesIndex = 1) {
+        if (slidesIndex == 1) {
             slidesIndex = slides.length;
         } else {
             slidesIndex--;
         }
 
-        checkSlidesLength(slides, current);
+        if (slides.length < 10) {
+            current.textContent = `0${slidesIndex}`;
+        } else {
+            current.textContent = slidesIndex;
+        }
 
-
-        dotsActive(dots)
+        dots.forEach(dot => dot.style.opacity = ".5");
+        dots[slidesIndex - 1].style.opacity = 1;
 
     });
 
@@ -149,4 +153,4 @@ function slider() {
     });
 }
 
-module.exports = slider;
+export default slider;
